@@ -1,0 +1,85 @@
+---
+title: "Twitter Sentiment Clustering of 2016 Presidential Race"
+output: pdf_document
+---
+
+```{r setup and imports, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(e1071)
+library(ggplot2)
+path_to_data = "/Twitter_Sentiment_Clustering_Election_2019/data/processed/"
+path_to_results = "/Twitter_Sentiment_Clustering_Election_2019/results/"
+path_to_doc = "/Twitter_Sentiment_Clustering_Election_2019/doc/"
+```
+
+## Introduction
+This notebook is used to view and analyze Twitter data from the 2019 Indian General Election. Our goal is to find different classes of tweets using the sentiment of the tweet and how much they reference either the Congress or BJP candidates. These classes of tweets and their sizes will then be used to analyze the change in sentiment over the last few weeks of the election. We hope to see how specific events during the race influence Twitters sentiment to either candidate.
+
+Data was gathered for 4 weeks prior to the election, and the data was pulled from Twitter using Python with the following parameters:
+
+Keywords: @RahulGandhi OR #RahulGandhi OR Rahul Gandhi OR Rahul OR @narendramodi OR #narendramodi OR Narendra Modi OR Modi
+
+Start Date: 2019-04-11
+
+End Date: 2019-05-10
+
+The following values were gathered for each tweet:
+
+Author-ID
+
+Date with Time
+
+Text
+
+The data is stored by day located in the data/raw/ folder. It was then processed to find the sentiment value and candidate reference value for each tweet using NLTK in Python. The processed data is stored by day located in the data/process/ folder.
+
+Graphs created by from all the data can be found in the doc/figures folder.
+
+## Processed Data
+The following is used to display the processed Twitter data. To view a specific data file change filename to desired file located in data/processed/ folder.
+
+This example will be showing the processed Twitter data from April 11, 2019.
+
+```{r view processed data}
+filename = "processed_Twitter_Modi_Gandhi_2019-04-11.csv"
+data = read.csv(file=paste(path_to_data,filename,sep=""), head=FALSE, sep=",")
+colnames(data)[1] = 'Sentiment'
+colnames(data)[2] = 'Candidate_Value'
+ggplot(data, aes(x=Candidate_Value, y=Sentiment)) + geom_point(size=I(.3)) + labs(title=basename(x), x ="Candidate_Value", y = "Sentiment") + coord_cartesian(xlim = c(-1,1),ylim = c(-1,1))
+
+```
+
+## Clustered Data
+The following is used to display the clustered Twitter data. To view a specific data file change filename to desired file located in results/ folder. In the results folder, results.txt includes the size of each cluster found using Birch. Clustering is preformed on a random sample of 10000 using Birch clustering.
+
+This example will be showing the clustered Twitter data from April 11, 2019.
+
+```{r view clustered data}
+filename = "clustered_processed_Twitter_Modi_Gandhi_2019-04-11.csv"
+data = read.csv(file=paste(path_to_results,filename,sep=""), head=FALSE, sep=",")
+colnames(data)[1] = 'Sentiment'
+colnames(data)[2] = 'Candidate_Value'
+colnames(data)[3] = 'Cluster'
+data$Cluster = as.character(data$Cluster)
+ggplot(data, aes(x=Candidate_Value, y=Sentiment, color=Cluster, shape=Cluster)) + geom_point(size=I(.75)) + scale_fill_hue(l=40) + scale_shape_manual(values=1:20) + labs(title=basename(x), x ="Candidate_Value", y = "Sentiment") + coord_cartesian(xlim = c(-1,1),ylim = c(-1,1))
+tapply(data$Cluster,data$Cluster,length)
+```
+
+## Analysis
+The following is used to see how events in the presedential race influenced twitter behavior.
+The graph shows the number of tweets per day from the data.
+
+```{r view number of tweets per day, verbose=FALSE}
+lengths_ = c()
+filenames_ = c()
+files <- list.files(path=path_to_data, pattern="*.csv", full.names=T, recursive=FALSE)
+lapply(files, function(x){
+  assign("lengths_", c(lengths_, length(readLines(x))), envir = .GlobalEnv)
+  assign("filenames_", c(filenames_, substr(basename(x), nchar(basename(x)) - 13, nchar(basename(x)) - 4)), envir = .GlobalEnv)
+})
+df = data.frame(filenames_, lengths_)
+colnames(data)[1] = 'Filename'
+colnames(data)[2] = 'Num_of_Tweets'
+ggplot(data=df, aes(x=df$filenames_, y=df$lengths_)) + geom_bar(stat="identity") + labs(title="Tweets Per Day, 04/11/19 - 05/10/19", x="Dates", y="Number of Tweets")+ theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
