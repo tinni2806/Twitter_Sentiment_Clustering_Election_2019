@@ -7,7 +7,7 @@
 </p>
 <br>
 
-# Twitter Sentiment Clustering Indian Election 2019
+# Twitter Sentiment Clustering Indian General Election 2019
 
 ## Overview
 The goal of this project is to analyze Twitter data related to the 2019 Indian General Election.
