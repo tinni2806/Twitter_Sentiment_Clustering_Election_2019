@@ -1,5 +1,13 @@
-![Twitter Election Img](http://www.businessreviewusa.com/public/uploads/large/large_article_im4302_Twitter-in-the-Election.jpg)
-# Twitter Presidential Race Sentiment Clustering
+<br>
+<p align="center">
+	<a href="#">
+		<img src="https://cdn.svgporn.com/logos/twitter.svg" width="175"  /> 	
+		<img src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201904/bjp_congress_twitter_election_commission_social_media_0.jpeg?VcSxl6yf8NfkDjc_zSP31XsJKr_0cbn0&size=770:433g" width="300" hspace="60" />
+	</a>
+</p>
+<br>
+
+# Twitter Sentiment Clustering Indian Election 2019
 
 ## Overview
 The goal of this project is to analyze Twitter data related to the 2019 Indian General Election.
@@ -24,9 +32,9 @@ The following values were gathered from each tweet:
 SciKitLearn's **Birch Clustering** algorithm was used to cluster the processed data.
 The following are graph examples of processed and clustered data:
 
-![Processed Data Graph Example](doc/figures/processed_Twitter_Modi_Gandhi_2016-11-08.png)
+![Processed Data Graph Example](doc/figures/processed_Twitter_Modi_Gandhi_2019-04-11.png)
 
-![Clustered Data Graph Example](doc/figures/clustered_processed_Twitter_Modi_Gandhi_2016-11-08.png)
+![Clustered Data Graph Example](doc/figures/clustered_processed_Twitter_Modi_Gandhi_2019-04-11.png)
 
 
 ## Getting Started
