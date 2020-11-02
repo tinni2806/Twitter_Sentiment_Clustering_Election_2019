@@ -19,8 +19,8 @@ specific events during the race influenced Twitter's sentiment towards either ca
 
 Data was gathered from 4 weeks prior to the election and the data was pulled from Twitter using Python with the following parameters:
 
-- **Start Date**: 2016-10-16
-- **End Date**: 2016-11-14
+- **Start Date**: 2019-04-11
+- **End Date**: 2019-05-10
 - **Keywords**: @RahulGandhi OR #RahulGandhi OR Rahul Gandhi OR Rahul OR @narendramodi OR #narendramodi OR Narendra Modi OR Modi
 
 The following values were gathered from each tweet:
